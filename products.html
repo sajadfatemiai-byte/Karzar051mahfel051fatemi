@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <title>فهرست کالاها و خدمات جهادی | کارزار محفل مشهد</title>
+  <meta name="description" content="فهرست کامل محصولات طبیعی، سوغات اصیل خراسان، تجهیزات سلامت و خدمات اشتغال خانگی جهاد اقتصادی محفل در بلوار توس مشهد."/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#af101a",
+            "primary-container": "#d32f2f",
+            "primary-fixed": "#ffdad6",
+            "secondary": "#9e4200",
+            "secondary-container": "#fb6d00",
+            "secondary-fixed": "#ffdbcb",
+            "tertiary": "#0058a2",
+            "tertiary-container": "#0770cc",
+            "tertiary-fixed": "#d4e3ff",
+            "surface": "#f8f9fb",
+            "surface-container": "#edeef0",
+            "surface-container-high": "#e7e8ea",
+            "surface-container-highest": "#e1e2e4",
+            "surface-container-low": "#f3f4f6",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#5b403d",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "headline-lg": ["Vazirmatn"],
+            "headline-md": ["Vazirmatn"],
+            "headline-sm": ["Vazirmatn"],
+            "title-md": ["Vazirmatn"],
+            "body-lg": ["Vazirmatn"],
+            "body-md": ["Vazirmatn"],
+            "body-sm": ["Vazirmatn"],
+            "label-lg": ["Vazirmatn"],
+            "label-md": ["Vazirmatn"],
+            "label-sm": ["Vazirmatn"],
+            "price-xl": ["Vazirmatn"],
+            "price-md": ["Vazirmatn"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen pb-24">
+
+  <!-- Mobile Top App Bar -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.06)] border-b border-surface-container/60 h-16">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-full flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <a href="index.html" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high shrink-0">
+          <span class="material-symbols-outlined text-lg">arrow_forward</span>
+        </a>
+        <div class="flex flex-col truncate">
+          <span class="font-headline-sm text-sm sm:text-base text-on-surface font-bold truncate">کاتالوگ کالاها و خدمات</span>
+          <span class="font-label-sm text-[10px] text-on-surface-variant truncate"><span id="itemsCountDisplay">۸</span> مورد موجود</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1 sm:gap-2 shrink-0">
+        <a class="relative w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" href="cart.html" aria-label="سبد خرید">
+          <span class="material-symbols-outlined text-xl">shopping_basket</span>
+          <span data-cart-badge class="absolute -top-1 -left-1 bg-primary text-on-primary font-label-sm text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold shadow-sm">۲</span>
+        </a>
+        <button class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" onclick="toggleMobileDrawer()" aria-label="منوی سایت">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Slide-Out Drawer Navigation -->
+  <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden" id="mobile-drawer" onclick="closeMobileDrawer()">
+    <div class="w-72 sm:w-80 h-full bg-surface-container-lowest shadow-2xl p-5 flex flex-col justify-between animate-slide-in mr-auto" onclick="event.stopPropagation()">
+      <div class="space-y-5">
+        <div class="flex items-center justify-between pb-4 border-b border-surface-container">
+          <div class="flex items-center gap-3">
+            <img alt="محفل" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida/AEtjO1V8kjubXcfoAKhCEMeMI8S9nO-qfnZNWKC-pZUxBnA2JH8gxrKypIlJtFIqO1v6F9m0-WR-3qlVEJ5ot82IaqLak-REczKS3AXf9S4tJT6dNxlb2vGYiY5bsx-JO9yWjEYiSXCo3LRQF5hMySw_mxsXBrbR9t5n8-qqFNfXB7G2UEIQ4uI4Hia34zFgzyLXcLEgdc0mFKGv71K0nos68NgOJlM7gvEqckpRSRiJLKDF9w" referrerpolicy="no-referrer"/>
+            <div class="flex flex-col">
+              <span class="font-bold text-primary text-sm">جهاد اقتصادی محفل</span>
+              <span class="text-xs text-on-surface-variant">مشهد مقدس • توس ۱۸۴</span>
+            </div>
+          </div>
+          <button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface" onclick="closeMobileDrawer()">
+            <span class="material-symbols-outlined text-lg">close</span>
+          </button>
+        </div>
+
+        <nav class="space-y-1">
+          <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-on-surface hover:bg-surface-container transition-colors text-sm" href="index.html">
+            <span class="material-symbols-outlined text-lg">home</span>
+            <span>صفحه اصلی</span>
+          </a>
+          <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-primary-fixed/40 text-primary font-bold text-sm" href="products.html">
+            <span class="material-symbols-outlined text-lg">storefront</span>
+            <span>همه کالاها و خدمات</span>
+          </a>
+          <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-on-surface hover:bg-surface-container transition-colors text-sm" href="cart.html">
+            <span class="material-symbols-outlined text-lg text-secondary-container">shopping_cart</span>
+            <span>سبد خرید و تکمیل سفارش</span>
+          </a>
+          <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-on-surface hover:bg-surface-container transition-colors text-sm" href="about.html">
+            <span class="material-symbols-outlined text-lg">info</span>
+            <span>درباره کارزار محفل</span>
+          </a>
+          <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-on-surface hover:bg-surface-container transition-colors text-sm" href="contact.html">
+            <span class="material-symbols-outlined text-lg">call</span>
+            <span>تماس با ما</span>
+          </a>
+          <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-primary font-bold hover:bg-surface-container transition-colors text-sm" href="admin.html">
+            <span class="material-symbols-outlined text-lg">admin_panel_settings</span>
+            <span>پنل مدیریت</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="space-y-2 pt-4 border-t border-surface-container">
+        <a class="w-full py-2.5 px-3 rounded-xl bg-secondary text-on-secondary text-xs font-bold flex items-center justify-center gap-2 shadow" href="tel:09367495875">
+          <span class="material-symbols-outlined text-sm">phone_in_talk</span>
+          <span dir="ltr">۰۹۳۶۷۴۹۵۸۷۵</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Scrollable Mobile Products Feed -->
+  <main class="w-full pt-20 px-3 sm:px-6 max-w-7xl mx-auto space-y-3.5">
+
+    <!-- Search Input -->
+    <div class="relative flex items-center w-full">
+      <span class="material-symbols-outlined absolute right-3.5 text-on-surface-variant pointer-events-none text-xl">search</span>
+      <input class="w-full bg-surface-container-lowest text-on-surface font-body-md text-sm pr-11 pl-4 py-3 rounded-2xl border border-surface-container shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/30" id="searchInput" placeholder="جستجو در کالاها، خدمات، عینک، زعفران..." type="search"/>
+    </div>
+
+    <!-- Horizontal Touch-Scroll Category Chips -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 text-nowrap no-scrollbar">
+      <button class="cat-pill px-3.5 py-1.5 rounded-xl bg-primary-container text-on-primary font-bold text-xs shrink-0 shadow-sm" data-category="all">همه</button>
+      <button class="cat-pill px-3.5 py-1.5 rounded-xl bg-surface-container text-on-surface-variant text-xs shrink-0" data-category="services">خدمات پاک‌کردن</button>
+      <button class="cat-pill px-3.5 py-1.5 rounded-xl bg-surface-container text-on-surface-variant text-xs shrink-0" data-category="health">عینک و سلامت</button>
+      <button class="cat-pill px-3.5 py-1.5 rounded-xl bg-surface-container text-on-surface-variant text-xs shrink-0" data-category="agriculture">زعفران و خوراکی</button>
+      <button class="cat-pill px-3.5 py-1.5 rounded-xl bg-surface-container text-on-surface-variant text-xs shrink-0" data-category="handicrafts">صنایع دستی</button>
+    </div>
+
+    <!-- Hidden Filter Controls for script compatibility -->
+    <select class="hidden" id="categoryFilter"><option value="all">همه</option><option value="services">services</option><option value="health">health</option><option value="agriculture">agriculture</option><option value="handicrafts">handicrafts</option></select>
+    <select class="hidden" id="sortFilter"><option value="default">default</option><option value="price-asc">price-asc</option><option value="price-desc">price-desc</option><option value="discount">discount</option></select>
+    <button class="hidden" id="resetBtn"></button>
+
+    <!-- 2-Column Responsive Touch Products Grid -->
+    <div class="grid grid-cols-2 gap-3" id="productsGrid">
+      <!-- Dynamic render via JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="hidden py-12 text-center bg-surface-container-lowest rounded-2xl shadow-sm border border-surface-container/60 p-4" id="emptyState">
+      <span class="material-symbols-outlined text-5xl text-on-surface-variant mb-1">search_off</span>
+      <h3 class="font-bold text-sm text-on-surface">کالایی یافت نشد</h3>
+      <p class="text-xs text-on-surface-variant mt-1 mb-3">عبارت جستجو را تغییر دهید یا فیلتر را بردارید.</p>
+      <button class="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-bold" onclick="resetFiltersHandler()">نمایش همه</button>
+    </div>
+
+  </main>
+
+  <!-- Mobile Fixed Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-md border-t border-surface-container shadow-2xl h-16 pb-safe">
+    <div class="max-w-md mx-auto h-full grid grid-cols-5 items-center px-2">
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="index.html" href="index.html">
+        <span class="material-symbols-outlined text-2xl">home</span>
+        <span class="text-[10px] font-bold mt-0.5">خانه</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all" data-nav-page="products.html" href="products.html">
+        <span class="material-symbols-outlined text-2xl">storefront</span>
+        <span class="text-[10px] font-bold mt-0.5">محصولات</span>
+      </a>
+      <a class="relative flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="cart.html" href="cart.html">
+        <div class="relative">
+          <span class="material-symbols-outlined text-2xl">shopping_basket</span>
+          <span data-cart-badge class="absolute -top-1.5 -left-2 bg-primary text-on-primary font-label-sm text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">۲</span>
+        </div>
+        <span class="text-[10px] font-bold mt-0.5">سبد خرید</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-secondary" href="tel:09367495875">
+        <span class="material-symbols-outlined text-2xl">phone_in_talk</span>
+        <span class="text-[10px] font-bold mt-0.5">تماس</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="admin.html" href="admin.html">
+        <span class="material-symbols-outlined text-2xl">admin_panel_settings</span>
+        <span class="text-[10px] font-bold mt-0.5">مدیریت</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Rubika Quick Order Modal -->
+  <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4" id="direct-order-modal">
+    <div class="bg-surface-container-lowest w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl space-y-4 animate-slide-up border border-surface-container">
+      <div class="flex items-center justify-between pb-2 border-b border-surface-container">
+        <div class="flex items-center gap-2 text-tertiary">
+          <span class="material-symbols-outlined">campaign</span>
+          <h3 class="font-bold text-sm text-on-surface">سفارش مستقیم به روبیکا</h3>
+        </div>
+        <button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface" onclick="closeDirectOrderModal()">
+          <span class="material-symbols-outlined text-sm">close</span>
+        </button>
+      </div>
+
+      <div class="p-3 bg-surface-container-low rounded-xl text-xs space-y-1">
+        <div class="font-bold text-on-surface" id="direct-modal-product-title">نام کالا</div>
+        <div class="text-on-surface-variant">مبلغ واحد: <span class="font-bold text-primary" id="direct-modal-product-price">۰</span> تومان</div>
+      </div>
+
+      <div class="space-y-2.5">
+        <input class="w-full px-3 py-2 bg-surface-container-low rounded-xl text-xs outline-none" id="direct-cust-name" placeholder="نام و نام خانوادگی..." type="text"/>
+        <input class="w-full px-3 py-2 bg-surface-container-low rounded-xl text-xs outline-none text-right" dir="ltr" id="direct-cust-phone" placeholder="۰۹XXXXXXXXX" type="tel"/>
+        <input class="w-full px-3 py-2 bg-surface-container-low rounded-xl text-xs outline-none" id="direct-cust-qty" min="1" type="number" value="1"/>
+      </div>
+
+      <div class="pt-1 flex flex-col gap-2">
+        <button class="w-full py-2.5 rounded-xl bg-tertiary text-on-tertiary text-xs font-bold flex items-center justify-center gap-2 shadow" onclick="submitDirectRubikaOrder()">
+          <span class="material-symbols-outlined text-sm">near_me</span>
+          <span>ارسال متن سفارش به روبیکا</span>
+        </button>
+        <a class="w-full py-2.5 rounded-xl bg-surface-container text-on-surface text-xs font-bold flex items-center justify-center gap-2" href="tel:09367495875">
+          <span class="material-symbols-outlined text-sm text-primary">call</span>
+          <span>تماس مستقیم تلفنی (۰۹۳۶۷۴۹۵۸۷۵)</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="store.js"></script>
+  <script>
+    const productsGrid = document.getElementById('productsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const sortFilter = document.getElementById('sortFilter');
+    const itemsCountDisplay = document.getElementById('itemsCountDisplay');
+    const emptyState = document.getElementById('emptyState');
+    const catPills = document.querySelectorAll('.cat-pill');
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialCat = urlParams.get('cat');
+    const initialQuery = urlParams.get('q');
+
+    if (initialCat) {
+      categoryFilter.value = initialCat;
+      highlightPill(initialCat);
+    }
+    if (initialQuery) {
+      searchInput.value = initialQuery;
+    }
+
+    function highlightPill(cat) {
+      catPills.forEach(p => {
+        if (p.getAttribute('data-category') === cat) {
+          p.classList.add('bg-primary-container', 'text-on-primary', 'font-bold');
+          p.classList.remove('bg-surface-container', 'text-on-surface-variant');
+        } else {
+          p.classList.remove('bg-primary-container', 'text-on-primary', 'font-bold');
+          p.classList.add('bg-surface-container', 'text-on-surface-variant');
+        }
+      });
+    }
+
+    catPills.forEach(p => {
+      p.addEventListener('click', () => {
+        const cat = p.getAttribute('data-category');
+        categoryFilter.value = cat;
+        highlightPill(cat);
+        renderCatalog();
+      });
+    });
+
+    function renderCatalog() {
+      const allProducts = getProducts();
+      const q = searchInput.value.trim().toLowerCase();
+      const selectedCat = categoryFilter.value;
+      const sort = sortFilter.value;
+
+      let filtered = allProducts.filter(item => {
+        const matchesQuery = !q || item.title.toLowerCase().includes(q) || item.description.toLowerCase().includes(q);
+        const matchesCat = (selectedCat === 'all') || (item.category === selectedCat);
+        return matchesQuery && matchesCat;
+      });
+
+      if (sort === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+      else if (sort === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+
+      itemsCountDisplay.textContent = toPersianDigits(filtered.length);
+
+      if (filtered.length === 0) {
+        productsGrid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      productsGrid.innerHTML = filtered.map(item => {
+        const hasDiscount = item.oldPrice && item.oldPrice > item.price;
+        return `
+          <div class="bg-surface-container-lowest rounded-2xl p-2.5 shadow-sm border border-surface-container/60 flex flex-col justify-between group">
+            <div class="space-y-2">
+              <div class="relative rounded-xl overflow-hidden aspect-square bg-surface-container-low">
+                <img class="w-full h-full object-cover" src="${item.image}" alt="${item.title}" referrerpolicy="no-referrer"/>
+                ${item.badge ? `<span class="absolute top-1 right-1 bg-primary text-on-primary text-[9px] px-1.5 py-0.2 rounded-full font-bold shadow-sm">${item.badge}</span>` : ''}
+              </div>
+              <div>
+                <span class="text-[9px] text-primary font-bold block">${item.categoryName || 'محصول'}</span>
+                <h3 class="font-bold text-xs text-on-surface line-clamp-1 mt-0.5">${item.title}</h3>
+                <p class="text-[10px] text-on-surface-variant line-clamp-1 mt-0.5">${item.description}</p>
+              </div>
+            </div>
+
+            <div class="pt-2 mt-2 border-t border-surface-container/60 space-y-2">
+              <div class="flex items-baseline gap-1 justify-between">
+                <span class="font-black text-xs text-primary">${toPersianDigits(item.price.toLocaleString())} تومان</span>
+                ${hasDiscount ? `<span class="text-[9px] line-through text-on-surface-variant/60">${toPersianDigits(item.oldPrice.toLocaleString())}</span>` : ''}
+              </div>
+              <div class="grid grid-cols-2 gap-1.5">
+                <button class="py-1.5 rounded-xl bg-secondary-container hover:bg-secondary text-on-secondary text-[11px] font-bold flex items-center justify-center gap-1 shadow-sm" onclick="addToCart('${item.title}', ${item.price}, '${item.image}', ${item.id})">
+                  <span class="material-symbols-outlined text-xs">add_shopping_cart</span>
+                  <span>سبد</span>
+                </button>
+                <button class="py-1.5 rounded-xl bg-tertiary hover:bg-tertiary-container text-on-tertiary text-[11px] font-bold flex items-center justify-center gap-1 shadow-sm" onclick="openDirectOrderModal('${item.title}', ${item.price})">
+                  <span class="material-symbols-outlined text-xs">campaign</span>
+                  <span>روبیکا</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    searchInput.addEventListener('input', renderCatalog);
+    function resetFiltersHandler() {
+      searchInput.value = '';
+      categoryFilter.value = 'all';
+      highlightPill('all');
+      renderCatalog();
+    }
+
+    // Direct Rubika Order Modal
+    let currentDirectItem = null;
+    function openDirectOrderModal(title, price) {
+      currentDirectItem = { title, price };
+      document.getElementById('direct-modal-product-title').textContent = title;
+      document.getElementById('direct-modal-product-price').textContent = toPersianDigits(price.toLocaleString());
+      const modal = document.getElementById('direct-order-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDirectOrderModal() {
+      const modal = document.getElementById('direct-order-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function submitDirectRubikaOrder() {
+      const name = document.getElementById('direct-cust-name').value.trim() || 'همشهری گرامی';
+      const phone = document.getElementById('direct-cust-phone').value.trim() || 'ثبت نشده';
+      const qty = parseInt(document.getElementById('direct-cust-qty').value, 10) || 1;
+      
+      const orderData = {
+        code: '#MK-' + Math.floor(1000 + Math.random() * 9000),
+        name: name,
+        phone: phone,
+        address: 'ثبت موبایلی / محله توس',
+        zone: 'مشهد مقدس - بلوار توس',
+        notes: 'سفارش مستقیم از کاتالوگ در روبیکا',
+        items: [{
+          title: currentDirectItem.title,
+          price: currentDirectItem.price,
+          qty: qty
+        }],
+        finalTotal: currentDirectItem.price * qty
+      };
+
+      sendOrderViaRubika(orderData);
+      closeDirectOrderModal();
+      showToast('متن سفارش کپی شد و روبیکا باز گردید.');
+    }
+
+    renderCatalog();
+  </script>
+</body>
+</html>

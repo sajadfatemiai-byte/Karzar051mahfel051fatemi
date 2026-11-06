@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <title>درباره کارزار جهاد اقتصادی محفل | بلوار توس مشهد</title>
+  <meta name="description" content="آشنایی با تاریخچه، اهداف و ارکان جهاد اقتصادی محفل در حاشیه شهر مشهد (بلوار توس)، حمایت از تولید خانگی و حذف واسطه‌های ناسالم."/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#af101a",
+            "primary-container": "#d32f2f",
+            "primary-fixed": "#ffdad6",
+            "secondary": "#9e4200",
+            "secondary-container": "#fb6d00",
+            "secondary-fixed": "#ffdbcb",
+            "tertiary": "#0058a2",
+            "tertiary-container": "#0770cc",
+            "tertiary-fixed": "#d4e3ff",
+            "surface": "#f8f9fb",
+            "surface-container": "#edeef0",
+            "surface-container-high": "#e7e8ea",
+            "surface-container-highest": "#e1e2e4",
+            "surface-container-low": "#f3f4f6",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#5b403d",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "headline-lg": ["Vazirmatn"],
+            "headline-md": ["Vazirmatn"],
+            "headline-sm": ["Vazirmatn"],
+            "title-md": ["Vazirmatn"],
+            "body-lg": ["Vazirmatn"],
+            "body-md": ["Vazirmatn"],
+            "body-sm": ["Vazirmatn"],
+            "label-lg": ["Vazirmatn"],
+            "label-md": ["Vazirmatn"],
+            "label-sm": ["Vazirmatn"],
+            "price-xl": ["Vazirmatn"],
+            "price-md": ["Vazirmatn"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen pb-24">
+
+  <!-- Mobile Top App Bar -->
+  <header class="fixed top-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.06)] border-b border-surface-container/60 h-16">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-full flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <a href="index.html" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface shrink-0">
+          <span class="material-symbols-outlined text-lg">arrow_forward</span>
+        </a>
+        <span class="font-bold text-xs sm:text-sm text-on-surface truncate">درباره کارزار محفل</span>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <a class="w-10 h-10 rounded-xl bg-secondary-fixed/70 text-on-secondary-fixed flex items-center justify-center" href="tel:09367495875">
+          <span class="material-symbols-outlined text-xl">call</span>
+        </a>
+        <button class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-on-surface" onclick="toggleMobileDrawer()">
+          <span class="material-symbols-outlined text-2xl">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden" id="mobile-drawer" onclick="closeMobileDrawer()">
+    <div class="w-72 sm:w-80 h-full bg-surface-container-lowest shadow-2xl p-5 flex flex-col justify-between animate-slide-in mr-auto" onclick="event.stopPropagation()">
+      <div class="space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-surface-container">
+          <span class="font-bold text-sm text-primary">جهاد اقتصادی محفل</span>
+          <button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center" onclick="closeMobileDrawer()">
+            <span class="material-symbols-outlined text-base">close</span>
+          </button>
+        </div>
+        <nav class="space-y-1">
+          <a class="block px-3 py-2 rounded-xl text-xs text-on-surface" href="index.html">صفحه اصلی</a>
+          <a class="block px-3 py-2 rounded-xl text-xs text-on-surface" href="products.html">همه کالاها و خدمات</a>
+          <a class="block px-3 py-2 rounded-xl text-xs text-on-surface" href="cart.html">سبد خرید</a>
+          <a class="block px-3 py-2 rounded-xl text-xs font-bold bg-primary-fixed/40 text-primary" href="about.html">درباره کارزار</a>
+          <a class="block px-3 py-2 rounded-xl text-xs text-on-surface" href="contact.html">تماس با ما</a>
+          <a class="block px-3 py-2 rounded-xl text-xs text-primary font-bold" href="admin.html">پنل مدیریت</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Main Content -->
+  <main class="w-full pt-20 px-3 sm:px-6 max-w-2xl mx-auto space-y-4">
+    
+    <div class="bg-surface-container-lowest p-5 rounded-3xl shadow-sm border border-surface-container/60 space-y-3 text-center">
+      <span class="text-[10px] bg-primary-fixed text-primary px-2.5 py-0.5 rounded-full font-bold">بلوار توس مشهد</span>
+      <h1 class="font-bold text-base sm:text-lg text-on-surface">داستان همیاری و عدالت اقتصادی محفل</h1>
+      <p class="text-xs text-on-surface-variant leading-relaxed">
+        حرکتی مردمی و خودجوش برای اشتغال پایدار بانوان سرپرست خانوار و عرضه بی‌واسطه محصولات کشاورزان بومی خراسان.
+      </p>
+    </div>
+
+    <!-- Image Banner -->
+    <div class="rounded-3xl overflow-hidden aspect-video bg-surface-container-low shadow-md relative">
+      <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQtd4dG2yun0BALPCLFUfCCB9MHRcq2ZVAcNYcdxc76Re1lt7AxzHblo_MAFLTrfCI8oyItwhjhcG0zN-lqRB1YBa5jir-T-IQbkIVpnSo5kzRnkjFi1u6PLTdAeI1QOT9fLK6GSRol-JRe-7yorUNz4qA1DrV6bzDrFtxEsndQgvfWVsGkYRMZgoeaqprDIX_4TEkuvixzsRDwC5Hj_X-iAl3ARTdeGI42grlgMDk" alt="محفل" referrerpolicy="no-referrer"/>
+    </div>
+
+    <!-- 3 Pillars (Mobile Touch Cards) -->
+    <div class="space-y-3">
+      <div class="p-4 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60 space-y-1.5">
+        <div class="flex items-center gap-2 text-primary">
+          <span class="material-symbols-outlined text-lg">volunteer_activism</span>
+          <h3 class="font-bold text-xs">اشتغال بانوان سرپرست خانوار</h3>
+        </div>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          کارگاه‌های پاک‌سازی زعفران و دوخت، به ده‌ها خانواده امکان کسب درآمد باکرامت در کنار خانواده را هدیه داده است.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60 space-y-1.5">
+        <div class="flex items-center gap-2 text-secondary">
+          <span class="material-symbols-outlined text-lg">handshake</span>
+          <h3 class="font-bold text-xs">حذف کامل دلالان و واسطه‌ها</h3>
+        </div>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          زعفران اعلا و عسل طبیعی مستقیماً از دست تولیدکننده به دست مصرف‌کننده می‌رسد.
+        </p>
+      </div>
+
+      <div class="p-4 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/60 space-y-1.5">
+        <div class="flex items-center gap-2 text-tertiary">
+          <span class="material-symbols-outlined text-lg">health_and_safety</span>
+          <h3 class="font-bold text-xs">سلامت و عینک طبی ارزان</h3>
+        </div>
+        <p class="text-xs text-on-surface-variant leading-relaxed">
+          توزیع عینک‌های باکیفیت و استاندارد با قیمت تمام‌شده کارگاهی در منطقه توس مشهد.
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA Card -->
+    <div class="rounded-3xl bg-secondary text-on-secondary p-5 shadow-md text-center space-y-3">
+      <h3 class="font-bold text-sm">همراهی با کارزار محفل</h3>
+      <p class="text-xs text-secondary-fixed">با خرید هر کالا در چرخه برکت خانواده‌های محله سهیم شوید.</p>
+      <a class="inline-block px-5 py-2.5 rounded-xl bg-surface-container-lowest text-secondary font-bold text-xs shadow" href="products.html">
+        مشاهده کاتالوگ محصولات
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-md border-t border-surface-container shadow-2xl h-16 pb-safe">
+    <div class="max-w-md mx-auto h-full grid grid-cols-5 items-center px-2">
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="index.html" href="index.html">
+        <span class="material-symbols-outlined text-2xl">home</span>
+        <span class="text-[10px] font-bold mt-0.5">خانه</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="products.html" href="products.html">
+        <span class="material-symbols-outlined text-2xl">storefront</span>
+        <span class="text-[10px] font-bold mt-0.5">محصولات</span>
+      </a>
+      <a class="relative flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="cart.html" href="cart.html">
+        <div class="relative">
+          <span class="material-symbols-outlined text-2xl">shopping_basket</span>
+          <span data-cart-badge class="absolute -top-1.5 -left-2 bg-primary text-on-primary font-label-sm text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">۲</span>
+        </div>
+        <span class="text-[10px] font-bold mt-0.5">سبد خرید</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-secondary" href="tel:09367495875">
+        <span class="material-symbols-outlined text-2xl">phone_in_talk</span>
+        <span class="text-[10px] font-bold mt-0.5">تماس</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="admin.html" href="admin.html">
+        <span class="material-symbols-outlined text-2xl">admin_panel_settings</span>
+        <span class="text-[10px] font-bold mt-0.5">مدیریت</span>
+      </a>
+    </div>
+  </nav>
+
+  <script src="store.js"></script>
+</body>
+</html>

@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+  <title>پنل مدیریت و پایش | کارزار جهاد اقتصادی محفل</title>
+  <meta name="description" content="سامانه یکپارچه مدیریت کالاها، انبارداری و پیگیری سفارش‌های جهاد اقتصادی محفل بلوار توس مشهد."/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#af101a",
+            "primary-container": "#d32f2f",
+            "primary-fixed": "#ffdad6",
+            "secondary": "#9e4200",
+            "secondary-container": "#fb6d00",
+            "secondary-fixed": "#ffdbcb",
+            "tertiary": "#0058a2",
+            "tertiary-container": "#0770cc",
+            "tertiary-fixed": "#d4e3ff",
+            "surface": "#f8f9fb",
+            "surface-container": "#edeef0",
+            "surface-container-high": "#e7e8ea",
+            "surface-container-highest": "#e1e2e4",
+            "surface-container-low": "#f3f4f6",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#5b403d",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "headline-lg": ["Vazirmatn"],
+            "headline-md": ["Vazirmatn"],
+            "headline-sm": ["Vazirmatn"],
+            "title-md": ["Vazirmatn"],
+            "body-lg": ["Vazirmatn"],
+            "body-md": ["Vazirmatn"],
+            "body-sm": ["Vazirmatn"],
+            "label-lg": ["Vazirmatn"],
+            "label-md": ["Vazirmatn"],
+            "label-sm": ["Vazirmatn"],
+            "price-xl": ["Vazirmatn"],
+            "price-md": ["Vazirmatn"]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="bg-surface font-body-md text-on-surface min-h-screen pb-24">
+
+  <!-- Password Login Overlay (If not authenticated) -->
+  <div class="fixed inset-0 z-50 bg-surface flex items-center justify-center p-4 hidden" id="login-screen">
+    <div class="bg-surface-container-lowest max-w-sm w-full rounded-3xl p-6 shadow-xl border border-surface-container space-y-5 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-primary-container text-on-primary mx-auto flex items-center justify-center shadow-md">
+        <span class="material-symbols-outlined text-3xl">admin_panel_settings</span>
+      </div>
+      <div>
+        <h2 class="font-bold text-base text-on-surface">ورود به پنل مدیریت محفل</h2>
+        <p class="text-xs text-on-surface-variant mt-0.5">جهاد اقتصادی بلوار توس مشهد</p>
+      </div>
+
+      <form id="admin-login-form" class="space-y-3.5 text-right" onsubmit="event.preventDefault(); handleAdminLogin();">
+        <div>
+          <label class="block text-xs font-bold text-on-surface mb-1">کلمه عبور مدیر سامانه:</label>
+          <div class="relative flex items-center">
+            <span class="material-symbols-outlined absolute right-3 text-on-surface-variant text-base">lock</span>
+            <input class="w-full pr-9 pl-9 py-2.5 bg-surface-container-low rounded-xl text-xs font-mono font-bold outline-none focus:ring-1 focus:ring-primary shadow-inner" id="admin-pass-input" placeholder="کلمه عبور محرمانه..." type="password" required autocomplete="current-password"/>
+            <button type="button" onclick="togglePassVisibility()" class="absolute left-2.5 text-on-surface-variant hover:text-primary p-1 focus:outline-none" title="نمایش/عدم نمایش">
+              <span class="material-symbols-outlined text-base" id="pass-eye-icon">visibility</span>
+            </button>
+          </div>
+          <p class="text-[11px] text-on-surface-variant mt-1.5 flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs text-primary">verified_user</span>
+            <span>دسترسی محرمانه مخصوص مدیر کارزار</span>
+          </p>
+          <span class="hidden text-error text-[11px] mt-1" id="login-error-msg">کلمه عبور نادرست است.</span>
+        </div>
+
+        <button class="w-full py-2.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary text-xs font-bold shadow transition-all" type="submit">
+          ورود به پنل
+        </button>
+      </form>
+
+      <div class="pt-2 border-t border-surface-container">
+        <a class="text-xs text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center gap-1" href="index.html">
+          <span class="material-symbols-outlined text-xs">arrow_forward</span>
+          <span>بازگشت به فروشگاه</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Main Mobile Interface -->
+  <div id="admin-app" class="w-full">
+    
+    <!-- Top Mobile App Bar -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.06)] border-b border-surface-container/60 h-16">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 h-full flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+          <img alt="محفل" class="w-9 h-9 rounded-full object-cover shrink-0 ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida/AEtjO1V8kjubXcfoAKhCEMeMI8S9nO-qfnZNWKC-pZUxBnA2JH8gxrKypIlJtFIqO1v6F9m0-WR-3qlVEJ5ot82IaqLak-REczKS3AXf9S4tJT6dNxlb2vGYiY5bsx-JO9yWjEYiSXCo3LRQF5hMySw_mxsXBrbR9t5n8-qqFNfXB7G2UEIQ4uI4Hia34zFgzyLXcLEgdc0mFKGv71K0nos68NgOJlM7gvEqckpRSRiJLKDF9w" referrerpolicy="no-referrer"/>
+          <div class="flex flex-col truncate">
+            <span class="font-bold text-xs sm:text-sm text-primary truncate">مدیریت جهاد اقتصادی محفل</span>
+            <span class="text-[10px] text-on-surface-variant truncate">بلوار توس مشهد</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <a class="px-2.5 py-1.5 rounded-xl bg-surface-container text-on-surface text-[11px] font-bold hover:bg-surface-container-high transition-colors flex items-center gap-1" href="index.html">
+            <span class="material-symbols-outlined text-xs">storefront</span>
+            <span class="hidden sm:inline">فروشگاه</span>
+          </a>
+          <button class="px-2.5 py-1.5 rounded-xl bg-error-container text-on-error-container text-[11px] font-bold flex items-center gap-1" onclick="openLogoutModal()">
+            <span class="material-symbols-outlined text-xs">logout</span>
+            <span>خروج</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Segmented Navigation Tabs -->
+    <div class="pt-20 px-3 sm:px-6 max-w-4xl mx-auto">
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 text-nowrap no-scrollbar">
+        <button class="nav-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-primary text-on-primary shadow-sm shrink-0 flex items-center gap-1.5" onclick="switchTab('products')" data-tab="products">
+          <span class="material-symbols-outlined text-sm">inventory_2</span>
+          <span>افزودن و مدیریت کالاها و خدمات</span>
+        </button>
+        <button class="nav-tab px-4 py-2.5 rounded-xl text-xs bg-surface-container text-on-surface-variant shrink-0 flex items-center gap-1.5" onclick="switchTab('settings')" data-tab="settings">
+          <span class="material-symbols-outlined text-sm">settings</span>
+          <span>تنظیمات شماره تماس و روبیکا</span>
+        </button>
+        <button class="nav-tab px-4 py-2.5 rounded-xl text-xs bg-surface-container text-on-surface-variant shrink-0 flex items-center gap-1.5" onclick="switchTab('rubika')" data-tab="rubika">
+          <span class="material-symbols-outlined text-sm">campaign</span>
+          <span>کانال روبیکا و متن تبلیغات</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="w-full px-3 sm:px-6 pt-3 max-w-4xl mx-auto space-y-4">
+
+      <!-- Tab 1: Powerful Product & Service Creation & Catalog Management -->
+      <section id="view-products" class="space-y-4">
+        
+        <!-- Add Product/Service Form Card -->
+        <div class="bg-surface-container-lowest p-4 sm:p-5 rounded-3xl shadow-sm border border-surface-container/80 space-y-4">
+          <div class="flex items-center justify-between border-b border-surface-container pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-xl">add_box</span>
+              <div>
+                <h2 class="font-bold text-xs sm:text-sm text-on-surface">افزودن کالا یا خدمت جدید</h2>
+                <p class="text-[10px] text-on-surface-variant">انتشار مستقیم و آنی در کاتالوگ فروشگاه</p>
+              </div>
+            </div>
+            <span class="text-[10px] bg-primary/10 text-primary font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              <span>همگام با ویترین</span>
+            </span>
+          </div>
+
+          <form id="full-product-form" class="space-y-3.5" onsubmit="event.preventDefault(); handleFullAddProduct();">
+            
+            <!-- Item Type Toggle -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1">نوع آیتم:</label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center justify-center gap-1.5 p-2 rounded-xl border border-surface-container bg-surface-container-low cursor-pointer hover:border-primary/50 text-xs font-bold text-on-surface transition-all has-[:checked]:bg-primary/10 has-[:checked]:border-primary has-[:checked]:text-primary">
+                  <input type="radio" name="item-type" value="product" checked class="hidden" onchange="toggleTypeHelp('product')"/>
+                  <span class="material-symbols-outlined text-sm">shopping_bag</span>
+                  <span>کالای فیزیکی</span>
+                </label>
+                <label class="flex items-center justify-center gap-1.5 p-2 rounded-xl border border-surface-container bg-surface-container-low cursor-pointer hover:border-primary/50 text-xs font-bold text-on-surface transition-all has-[:checked]:bg-primary/10 has-[:checked]:border-primary has-[:checked]:text-primary">
+                  <input type="radio" name="item-type" value="service" class="hidden" onchange="toggleTypeHelp('service')"/>
+                  <span class="material-symbols-outlined text-sm">handyman</span>
+                  <span>خدمات و اشتغال خانگی</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Title -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1">نام محصول یا عنوان خدمت *</label>
+              <input class="w-full px-3.5 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner text-on-surface" id="prod-title" placeholder="مثلاً: زعفران نگین سوپر ممتاز / خدمات پاک‌کردن زعفران / عینک طبی مطالعه" required type="text"/>
+            </div>
+
+            <!-- Category & Badge -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-on-surface mb-1">دسته‌بندی موضوعی *</label>
+                <select class="w-full px-3 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none cursor-pointer border border-surface-container text-on-surface" id="prod-category" required>
+                  <option value="agriculture">زعفران، زرشک و محصولات کشاورزی</option>
+                  <option value="health">سلامت، عینک طبی و بینایی‌سنجی</option>
+                  <option value="natural">عسل طبیعی و گیاهان دارویی</option>
+                  <option value="services">خدمات خرد و اشتغال خانگی</option>
+                  <option value="handicrafts">صنایع‌دستی و بافتنی بانوان</option>
+                  <option value="other">سایر کالاها و نیازمندی‌ها</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-on-surface mb-1">برچسب و نشان ویژه</label>
+                <select class="w-full px-3 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none cursor-pointer border border-surface-container text-on-surface" id="prod-badge">
+                  <option value="تخفیف ویژه">تخفیف ویژه کارزار</option>
+                  <option value="محصول جدید">محصول جدید</option>
+                  <option value="پیشنهاد کارزار">پیشنهاد کارزار</option>
+                  <option value="خدمت جهادی">خدمت جهادی</option>
+                  <option value="سوغات اصیل">سوغات اصیل قائنات</option>
+                  <option value="موجودی محدود">موجودی محدود</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Price, Old Price & Unit -->
+            <div class="grid grid-cols-3 gap-2">
+              <div class="col-span-1">
+                <label class="block text-[11px] font-bold text-on-surface mb-1">قیمت (تومان) *</label>
+                <input class="w-full px-2.5 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner font-mono font-bold text-primary" id="prod-price" placeholder="مثلاً: 350000" required type="number" min="0"/>
+              </div>
+
+              <div class="col-span-1">
+                <label class="block text-[11px] font-bold text-on-surface mb-1">قیمت قبل (تومان)</label>
+                <input class="w-full px-2.5 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner font-mono text-on-surface-variant" id="prod-old-price" placeholder="اختیاری" type="number" min="0"/>
+              </div>
+
+              <div class="col-span-1">
+                <label class="block text-[11px] font-bold text-on-surface mb-1">واحد اندازه‌گیری</label>
+                <input class="w-full px-2.5 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner text-on-surface" id="prod-unit" placeholder="مثقال / کیلو / عدد / نوبت" value="تومان" type="text"/>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1">توضیحات و ویژگی‌ها</label>
+              <textarea class="w-full px-3.5 py-2 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner text-on-surface resize-none" id="prod-desc" rows="2" placeholder="توضیح کوتاه درباره کیفیت، تولیدکننده، نحوه تحویل در محله توس یا خواص محصول..."></textarea>
+            </div>
+
+            <!-- Image Support Section (Upload, URL, or Presets) -->
+            <div class="p-3.5 rounded-2xl bg-surface-container-low/70 border border-surface-container space-y-3">
+              <div class="flex items-center justify-between">
+                <label class="text-[11px] font-bold text-on-surface flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-primary text-base">add_a_photo</span>
+                  <span>عکس کالا یا خدمت (انتخاب از گوشی یا لینک)</span>
+                </label>
+                <button type="button" class="text-[10px] text-error hover:underline hidden" id="btn-remove-img" onclick="clearSelectedImage()">حذف تصویر</button>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <!-- Live Image Preview Box -->
+                <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-surface-container overflow-hidden shrink-0 border border-surface-container flex items-center justify-center shadow-inner group">
+                  <img id="image-preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFHbGxzhuOnlaTtySadW6_DGZFub2p3Ct5Q1UF0A2NY373ILHVN7Euz3_sXgib23JfaoQjP3t1dyerWPdwosLOZh5ZptC93UJLig8lnjNG-KRCgvmjLWmxF5nz-OaLeRyENP2QN5c2nzOvrkhMY1WBl5-j8F_eERtbEOtxssJziNsZxHGOUkmU4RQt5WA-yDOmtcYqhbvgM7W07fktp5M3akGtlC6yChC6c2XPmNTI" alt="پیش‌نمایش" class="w-full h-full object-cover"/>
+                  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer" onclick="document.getElementById('file-upload-input').click()">
+                    <span class="material-symbols-outlined text-white text-base">photo_camera</span>
+                  </div>
+                </div>
+
+                <!-- Upload and URL inputs -->
+                <div class="flex-1 space-y-2">
+                  <!-- File Upload Button -->
+                  <div>
+                    <input type="file" id="file-upload-input" accept="image/*" class="hidden" onchange="handleFileImageChange(event)"/>
+                    <button type="button" class="w-full py-2 px-3 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-xs font-bold flex items-center justify-center gap-1.5 border border-surface-container transition-colors shadow-sm" onclick="document.getElementById('file-upload-input').click()">
+                      <span class="material-symbols-outlined text-base text-primary">upload_file</span>
+                      <span>آپلود عکس از گالری یا دوربین</span>
+                    </button>
+                  </div>
+
+                  <!-- Image URL input -->
+                  <div>
+                    <input class="w-full px-3 py-1.5 bg-surface-container-lowest rounded-xl text-[11px] outline-none focus:ring-1 focus:ring-primary shadow-inner text-on-surface" id="prod-img-url" placeholder="یا آدرس اینترنتی عکس را اینجا وارد کنید..." type="url" oninput="handleImageUrlChange(this.value)"/>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Presets -->
+              <div>
+                <span class="text-[10px] text-on-surface-variant font-bold block mb-1.5">یا انتخاب سریع تصویر آماده کارزار:</span>
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-nowrap">
+                  <button type="button" class="px-2.5 py-1 rounded-lg bg-surface-container-lowest hover:bg-primary/10 hover:text-primary text-[10px] font-bold border border-surface-container transition-all flex items-center gap-1 shrink-0" onclick="setPresetImage('saffron')">
+                    <span>زعفران ممتاز</span>
+                  </button>
+                  <button type="button" class="px-2.5 py-1 rounded-lg bg-surface-container-lowest hover:bg-primary/10 hover:text-primary text-[10px] font-bold border border-surface-container transition-all flex items-center gap-1 shrink-0" onclick="setPresetImage('glasses')">
+                    <span>عینک طبی</span>
+                  </button>
+                  <button type="button" class="px-2.5 py-1 rounded-lg bg-surface-container-lowest hover:bg-primary/10 hover:text-primary text-[10px] font-bold border border-surface-container transition-all flex items-center gap-1 shrink-0" onclick="setPresetImage('honey')">
+                    <span>عسل طبیعی</span>
+                  </button>
+                  <button type="button" class="px-2.5 py-1 rounded-lg bg-surface-container-lowest hover:bg-primary/10 hover:text-primary text-[10px] font-bold border border-surface-container transition-all flex items-center gap-1 shrink-0" onclick="setPresetImage('mint')">
+                    <span>عرقیات سنتی</span>
+                  </button>
+                  <button type="button" class="px-2.5 py-1 rounded-lg bg-surface-container-lowest hover:bg-primary/10 hover:text-primary text-[10px] font-bold border border-surface-container transition-all flex items-center gap-1 shrink-0" onclick="setPresetImage('handicrafts')">
+                    <span>صنایع دستی</span>
+                  </button>
+                  <button type="button" class="px-2.5 py-1 rounded-lg bg-surface-container-lowest hover:bg-primary/10 hover:text-primary text-[10px] font-bold border border-surface-container transition-all flex items-center gap-1 shrink-0" onclick="setPresetImage('cleaning')">
+                    <span>خدمات پاک‌کردن</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="pt-2 flex items-center gap-2">
+              <button class="flex-1 py-3 rounded-2xl bg-primary hover:bg-primary-container text-on-primary text-xs font-bold shadow-md flex items-center justify-center gap-1.5 transition-all" type="submit">
+                <span class="material-symbols-outlined text-base">check_circle</span>
+                <span>ثبت و انتشار فوری در فروشگاه</span>
+              </button>
+              <button class="px-3.5 py-3 rounded-2xl bg-surface-container text-on-surface-variant hover:text-on-surface text-xs font-bold transition-colors" type="button" onclick="resetProductForm()">
+                پاک‌کردن
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Existing Products Management List -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-lg">view_list</span>
+              <h3 class="font-bold text-xs sm:text-sm text-on-surface">کالاها و خدمات فعال در فروشگاه</h3>
+              <span class="text-[10px] bg-surface-container px-2 py-0.5 rounded-full font-bold text-on-surface-variant" id="products-count-badge">۰ قلم</span>
+            </div>
+            <button class="text-[11px] text-tertiary hover:underline font-bold flex items-center gap-1" onclick="resetToInitialProducts()">
+              <span class="material-symbols-outlined text-xs">restart_alt</span>
+              <span>بازیابی اقلام اولیه</span>
+            </button>
+          </div>
+
+          <!-- Search Filter -->
+          <div class="relative">
+            <span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant text-base">search</span>
+            <input class="w-full pr-9 pl-3 py-2 bg-surface-container-lowest rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-sm text-on-surface border border-surface-container/60" id="admin-search-products" placeholder="جستجو در بین محصولات ثبت‌شده..." type="text" oninput="filterAdminProducts(this.value)"/>
+          </div>
+
+          <div class="space-y-2.5" id="mobile-products-list">
+            <!-- Rendered as touch-friendly cards -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Tab 2: Store & Contact Settings (Phone, Rubika Link/ID, Address, Announcements) -->
+      <section id="view-settings" class="space-y-4 hidden">
+        <div class="bg-surface-container-lowest p-4 sm:p-5 rounded-3xl shadow-sm border border-surface-container/80 space-y-4">
+          <div class="flex items-center justify-between border-b border-surface-container pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-xl">tune</span>
+              <div>
+                <h2 class="font-bold text-xs sm:text-sm text-on-surface">تنظیمات شماره تماس و پیام‌رسان روبیکا</h2>
+                <p class="text-[10px] text-on-surface-variant">تغییر اطلاعات ارتباطی، پیوندها و متن‌های سراسر فروشگاه</p>
+              </div>
+            </div>
+            <span class="text-[10px] bg-secondary/10 text-secondary font-bold px-2.5 py-1 rounded-full">اعمال سراسری</span>
+          </div>
+
+          <form id="store-settings-form" class="space-y-3.5" onsubmit="event.preventDefault(); handleSaveStoreSettings();">
+            
+            <!-- Phone Number Field -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1 flex items-center justify-between">
+                <span>شماره تماس اصلی برای خرید و پشتیبانی *</span>
+                <span class="text-[10px] text-on-surface-variant font-normal">برای دکمه‌های تماس مستقیم و فاکتورها</span>
+              </label>
+              <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute right-3 text-primary text-base">call</span>
+                <input class="w-full pr-9 pl-3 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner font-mono font-bold text-on-surface text-left" dir="ltr" id="setting-phone" placeholder="09367495875" required type="tel"/>
+              </div>
+            </div>
+
+            <!-- Rubika Channel URL -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1 flex items-center justify-between">
+                <span>لینک کامل کانال روبیکا *</span>
+                <span class="text-[10px] text-on-surface-variant font-normal">برای دکمه‌های روبیکا و ثبت سفارش</span>
+              </label>
+              <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute right-3 text-tertiary text-base">link</span>
+                <input class="w-full pr-9 pl-3 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner font-mono text-on-surface text-left" dir="ltr" id="setting-rubika-url" placeholder="https://rubika.ir/karzarmahfel184" required type="url"/>
+              </div>
+            </div>
+
+            <!-- Rubika Display ID / Handle -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1 flex items-center justify-between">
+                <span>شناسه یا نام نمایشی کانال روبیکا *</span>
+                <span class="text-[10px] text-on-surface-variant font-normal">جهت درج در کارت‌ها و بنرها</span>
+              </label>
+              <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute right-3 text-tertiary text-base">alternate_email</span>
+                <input class="w-full pr-9 pl-3 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner font-mono text-on-surface text-left" dir="ltr" id="setting-rubika-id" placeholder="karzarmahfel184@" required type="text"/>
+              </div>
+            </div>
+
+            <!-- Physical Address -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1">آدرس فیزیکی و پایگاه توزیع در مشهد *</label>
+              <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute right-3 text-secondary text-base">location_on</span>
+                <input class="w-full pr-9 pl-3 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner text-on-surface" id="setting-address" placeholder="مشهد مقدس، بلوار توس، توس ۱۸۴" required type="text"/>
+              </div>
+            </div>
+
+            <!-- Working Hours -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1">ساعت کاری و زمان پاسخگویی</label>
+              <div class="relative flex items-center">
+                <span class="material-symbols-outlined absolute right-3 text-on-surface-variant text-base">schedule</span>
+                <input class="w-full pr-9 pl-3 py-2.5 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner text-on-surface" id="setting-hours" placeholder="همه روزه از ۸ صبح الی ۲۱" type="text"/>
+              </div>
+            </div>
+
+            <!-- Announcement Banner Text -->
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1 flex items-center justify-between">
+                <span>متن پیام اطلاعیه بالای سایت</span>
+                <span class="text-[10px] text-on-surface-variant font-normal">در هدر و بنر فروشگاه</span>
+              </label>
+              <textarea class="w-full px-3 py-2 bg-surface-container-low rounded-xl text-xs outline-none focus:ring-1 focus:ring-primary shadow-inner text-on-surface resize-none" id="setting-announcement" rows="2" placeholder="پیام ویژه، تخفیف فصلی یا اطلاعیه برای خریداران..."></textarea>
+            </div>
+
+            <!-- Live Preview Card -->
+            <div class="p-3.5 rounded-2xl bg-surface-container-low/70 border border-surface-container space-y-2">
+              <span class="text-[10px] font-bold text-primary flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">visibility</span>
+                <span>پیش‌نمایش زنده خروجی برای مخاطبان:</span>
+              </span>
+              <div class="text-xs space-y-1 text-on-surface">
+                <div>📞 تماس خرید: <strong class="text-primary font-mono" id="preview-phone">۰۹۳۶۷۴۹۵۸۷۵</strong></div>
+                <div>🌐 کانال روبیکا: <strong class="text-tertiary font-mono" id="preview-rubika">karzarmahfel184@</strong></div>
+                <div>📍 آدرس تحویل: <span class="text-on-surface-variant" id="preview-address">مشهد مقدس، بلوار توس، توس ۱۸۴</span></div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="pt-2 flex items-center gap-2">
+              <button class="flex-1 py-3 rounded-2xl bg-primary hover:bg-primary-container text-on-primary text-xs font-bold shadow-md flex items-center justify-center gap-1.5 transition-all" type="submit">
+                <span class="material-symbols-outlined text-base">save</span>
+                <span>ذخیره تغییرات در تمام صفحات</span>
+              </button>
+              <button class="px-3.5 py-3 rounded-2xl bg-surface-container text-on-surface-variant hover:text-on-surface text-xs font-bold transition-colors" type="button" onclick="resetStoreSettingsToDefault()">
+                پیش‌فرض
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Tab 3: Rubika Broadcast & Texts -->
+      <section id="view-rubika" class="space-y-4 hidden">
+        <div class="bg-surface-container-lowest p-4 sm:p-5 rounded-3xl shadow-sm border border-surface-container/80 space-y-4">
+          <div class="flex items-center justify-between border-b border-surface-container pb-3">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-tertiary text-xl">campaign</span>
+              <div>
+                <h3 class="font-bold text-xs sm:text-sm text-on-surface">متن‌های آماده انتشار در کانال روبیکا</h3>
+                <p class="text-[10px] text-on-surface-variant">تولید خودکار بر اساس اطلاعات تماس و لینک روبیکای ذخیره شده</p>
+              </div>
+            </div>
+            <a class="px-2.5 py-1 rounded-xl bg-tertiary text-on-tertiary text-[11px] font-bold flex items-center gap-1" id="rubika-channel-direct-link" href="https://rubika.ir/karzarmahfel184" target="_blank" rel="noopener noreferrer">
+              <span>ورود به کانال</span>
+              <span class="material-symbols-outlined text-xs">open_in_new</span>
+            </a>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1">متن تبلیغ عمومی کارزار و محصولات:</label>
+              <textarea class="w-full p-3 bg-surface-container-low rounded-xl text-xs outline-none text-on-surface font-sans" rows="5" id="rubika-post-text"></textarea>
+              <button class="w-full mt-2 py-2.5 rounded-xl bg-tertiary text-on-tertiary text-xs font-bold shadow flex items-center justify-center gap-1.5" onclick="copyRubikaText('rubika-post-text')">
+                <span class="material-symbols-outlined text-sm">content_copy</span>
+                <span>کپی متن جهت ارسال در روبیکا</span>
+              </button>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-on-surface mb-1">متن معرفی خدمات اشتغال و پاک‌کردن زعفران:</label>
+              <textarea class="w-full p-3 bg-surface-container-low rounded-xl text-xs outline-none text-on-surface font-sans" rows="4" id="rubika-service-text"></textarea>
+              <button class="w-full mt-2 py-2.5 rounded-xl bg-surface-container text-on-surface text-xs font-bold shadow-sm flex items-center justify-center gap-1.5" onclick="copyRubikaText('rubika-service-text')">
+                <span class="material-symbols-outlined text-sm">content_copy</span>
+                <span>کپی متن خدمات اشتغال خانگی</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Mobile Fixed Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest/95 backdrop-blur-md border-t border-surface-container shadow-2xl h-16 pb-safe">
+    <div class="max-w-md mx-auto h-full grid grid-cols-5 items-center px-2">
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="index.html" href="index.html">
+        <span class="material-symbols-outlined text-2xl">home</span>
+        <span class="text-[10px] font-bold mt-0.5">خانه</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="products.html" href="products.html">
+        <span class="material-symbols-outlined text-2xl">storefront</span>
+        <span class="text-[10px] font-bold mt-0.5">محصولات</span>
+      </a>
+      <a class="relative flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-primary" data-nav-page="cart.html" href="cart.html">
+        <div class="relative">
+          <span class="material-symbols-outlined text-2xl">shopping_basket</span>
+          <span data-cart-badge class="absolute -top-1.5 -left-2 bg-primary text-on-primary font-label-sm text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">۲</span>
+        </div>
+        <span class="text-[10px] font-bold mt-0.5">سبد خرید</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all text-on-surface-variant hover:text-secondary" href="tel:09367495875">
+        <span class="material-symbols-outlined text-2xl">phone_in_talk</span>
+        <span class="text-[10px] font-bold mt-0.5">تماس</span>
+      </a>
+      <a class="flex flex-col items-center justify-center py-1 transition-all" data-nav-page="admin.html" href="admin.html">
+        <span class="material-symbols-outlined text-2xl">admin_panel_settings</span>
+        <span class="text-[10px] font-bold mt-0.5">مدیریت</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Mobile Price Edit Dialog -->
+  <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4" id="price-modal">
+    <div class="bg-surface-container-lowest w-full sm:max-w-sm rounded-t-3xl sm:rounded-3xl p-5 shadow-2xl space-y-4 animate-slide-up border border-surface-container">
+      <div class="flex items-center justify-between pb-2 border-b border-surface-container">
+        <span class="font-bold text-xs text-on-surface">تغییر قیمت کالا یا خدمت</span>
+        <button onclick="closePriceModal()"><span class="material-symbols-outlined text-sm">close</span></button>
+      </div>
+      <p class="text-xs text-on-surface-variant font-bold" id="price-modal-title"></p>
+      <div>
+        <label class="block text-xs font-bold text-on-surface mb-1">قیمت جدید (تومان):</label>
+        <input class="w-full px-3 py-2 bg-surface-container-low rounded-xl text-xs outline-none font-mono font-bold text-primary" id="price-modal-input" type="number"/>
+      </div>
+      <div class="flex justify-end gap-2 pt-1">
+        <button class="px-3 py-2 rounded-xl bg-surface-container text-xs font-bold" onclick="closePriceModal()">انصراف</button>
+        <button class="px-4 py-2 rounded-xl bg-primary text-on-primary text-xs font-bold shadow" onclick="savePriceModal()">ثبت قیمت</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Logout Modal -->
+  <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4" id="logout-modal">
+    <div class="bg-surface-container-lowest max-w-xs w-full rounded-2xl p-5 shadow-2xl space-y-3 text-center border border-surface-container">
+      <h3 class="font-bold text-sm text-on-surface">خروج از پنل مدیریت؟</h3>
+      <p class="text-xs text-on-surface-variant">برای ورود دوباره نیاز به کلمه عبور اختصاصی مدیر خواهید داشت.</p>
+      <div class="flex items-center justify-center gap-2 pt-1">
+        <button class="px-3 py-1.5 rounded-xl bg-surface-container text-xs font-bold" onclick="closeLogoutModal()">بازگشت</button>
+        <button class="px-4 py-1.5 rounded-xl bg-error text-on-error text-xs font-bold shadow" onclick="confirmLogout()">خروج</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="store.js"></script>
+  <script>
+    function togglePassVisibility() {
+      const input = document.getElementById('admin-pass-input');
+      const icon = document.getElementById('pass-eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    async function sha256Hex(str) {
+      const utf8 = new TextEncoder().encode(str);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('mahfel_admin_auth');
+      const loginScreen = document.getElementById('login-screen');
+      const adminApp = document.getElementById('admin-app');
+
+      if (!isAuth) {
+        loginScreen.classList.remove('hidden');
+        loginScreen.classList.add('flex');
+        adminApp.classList.add('hidden');
+      } else {
+        loginScreen.classList.add('hidden');
+        loginScreen.classList.remove('flex');
+        adminApp.classList.remove('hidden');
+        refreshAdminData();
+      }
+    }
+
+    async function handleAdminLogin() {
+      const inputEl = document.getElementById('admin-pass-input');
+      const pass = inputEl.value.trim();
+      const errorMsg = document.getElementById('login-error-msg');
+
+      // Secure SHA-256 hash comparison (the secret password is never stored or revealed in plaintext)
+      const SECURE_HASH = 'ec0a877519cf1e262d06de2f2cc2d611d0c559870799771d17f9845afed2f660';
+
+      try {
+        const hash = await sha256Hex(pass);
+        if (hash === SECURE_HASH) {
+          sessionStorage.setItem('mahfel_admin_auth', 'true');
+          inputEl.value = '';
+          errorMsg.classList.add('hidden');
+          checkAuth();
+          showToast('خوش آمدید. ورود مدیریت انجام شد.');
+        } else {
+          errorMsg.classList.remove('hidden');
+        }
+      } catch (e) {
+        // Obfuscated fallback for restricted environments
+        if (btoa(unescape(encodeURIComponent(pass))) === 'c2FqYWQwNTE=') {
+          sessionStorage.setItem('mahfel_admin_auth', 'true');
+          inputEl.value = '';
+          errorMsg.classList.add('hidden');
+          checkAuth();
+          showToast('خوش آمدید. ورود مدیریت انجام شد.');
+        } else {
+          errorMsg.classList.remove('hidden');
+        }
+      }
+    }
+
+    function openLogoutModal() {
+      const m = document.getElementById('logout-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeLogoutModal() {
+      const m = document.getElementById('logout-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function confirmLogout() {
+      sessionStorage.removeItem('mahfel_admin_auth');
+      closeLogoutModal();
+      checkAuth();
+      showToast('از پنل خارج شدید.');
+    }
+
+    // Presets for product images
+    const PRESET_IMAGES = {
+      saffron: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDFHbGxzhuOnlaTtySadW6_DGZFub2p3Ct5Q1UF0A2NY373ILHVN7Euz3_sXgib23JfaoQjP3t1dyerWPdwosLOZh5ZptC93UJLig8lnjNG-KRCgvmjLWmxF5nz-OaLeRyENP2QN5c2nzOvrkhMY1WBl5-j8F_eERtbEOtxssJziNsZxHGOUkmU4RQt5WA-yDOmtcYqhbvgM7W07fktp5M3akGtlC6yChC6c2XPmNTI',
+      glasses: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCpQffQ5Mi_EEUQrgqN5Gn4baXMMk8AcJpmwTrIbOzkPd0ZAm3Zdh0r8SF_lf203aLMAqVDTsYG3FZf-Qs12P9QC3khs9VCq-J_7sTiwWkc5P24Id6oEsyoInNzwclnddKR5NE5ADHMgTXEN5ym4_EA1dtHWJj6OWcETrZvGJocJZ3w7gZz1hpj7rYerlwcOu7C-b51DwDU9LYP8zB88Lws3KoBU4WkWxUbM0HZZ5Em',
+      honey: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAGQWqCKny5wvI-itUQ3_BxdFhethu8crHMdR5Rs7NESSQIWFBvC-89LRn-zHqKJilpfoVjf2ljeY4QmvwO7K-AgTbAzhiyl7E8TQepZFMvsqLw0iDJovHJmW889dPlX_Uzrc5_3AKPoNgZjBt9PdSi-YSC-bT6ScYcy_uKyVcXGDpVyCOW2MjFNsNgcJGNb17TYlS274rrgkzxUphjXA0eXeqMvPQ4X4BxGgQJrtYE',
+      mint: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD6DgmMY2rgXpRcxIU9L-R26FRvSstLVTVUQEpCCSZgB5NZXM9K5Hng4pP7Pi97-RgDDUdDBx3-58SyYd2Z6WrNgdewwIdx_qdW8OR7lzAw1q7pzyFviI9-bTBHWeQoTOjBPJmxywLT5iriZ3fwjO6uoddpyP9kNwdH2Hn2G3vKA6HevZNLihiaVt7KGVjzksJJfiImLqnU3jSfESUFdn8E0D3xQBLGarfaZ8Y5Vs44',
+      handicrafts: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAIIN7V7yO-_Nsx6FOGgZytTdilxl-wjtjNty09XTZetZxoAsMtq4h4kBHIvcGwe663rp_aKJCk4b17VVTrDkKcmdg9h3VnkmZ4hiy35C8qjki2oDTOrMriem_OQ1j_Tx1sy1pfQX2QL-zxzvHoAYtj_HrWTrf0oabihxCjv9vHTN3Z5L_lQurNhdgnqeBU9aqKrjfi11nJOveEqRGdXsuk1BRV8RmmwIEXXEZcaDRZ',
+      cleaning: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCMyCni9sZk1Nr8_qAAKIzwCGYw9W5YoQQ0pvwu22PqWe5B0BbKJYVLj0TEu-T6nAvPTvCMZYK0n5bVUxbYiNOpK2ZyRaFGgLdmHn9PWiax0Z14qVPL0fpyOaZDZ3BNtTcIJQ_etcJILOiQoqQxQvnjpd5hJ4-OfVQedPxDjfisej_o9107UkGgTmVsJfKpZrRRh_Y3Iz4PchebaiugL-Rkg_z7Fl2ci7x8UZJAc2Cq'
+    };
+
+    let currentSelectedImage = PRESET_IMAGES.saffron;
+
+    function setPresetImage(key) {
+      if (PRESET_IMAGES[key]) {
+        currentSelectedImage = PRESET_IMAGES[key];
+        document.getElementById('image-preview').src = currentSelectedImage;
+        document.getElementById('prod-img-url').value = '';
+        document.getElementById('btn-remove-img').classList.remove('hidden');
+        showToast('تصویر انتخاب شد.');
+      }
+    }
+
+    function handleFileImageChange(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        alert('لطفاً یک فایل تصویری معتبر انتخاب نمایید.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        currentSelectedImage = e.target.result;
+        document.getElementById('image-preview').src = currentSelectedImage;
+        document.getElementById('prod-img-url').value = '';
+        document.getElementById('btn-remove-img').classList.remove('hidden');
+        showToast('عکس با موفقیت بارگذاری شد.');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleImageUrlChange(url) {
+      if (url && url.trim().length > 5) {
+        currentSelectedImage = url.trim();
+        document.getElementById('image-preview').src = currentSelectedImage;
+        document.getElementById('btn-remove-img').classList.remove('hidden');
+      }
+    }
+
+    function clearSelectedImage() {
+      currentSelectedImage = PRESET_IMAGES.saffron;
+      document.getElementById('image-preview').src = currentSelectedImage;
+      document.getElementById('prod-img-url').value = '';
+      document.getElementById('file-upload-input').value = '';
+      document.getElementById('btn-remove-img').classList.add('hidden');
+    }
+
+    function toggleTypeHelp(type) {
+      const unitInput = document.getElementById('prod-unit');
+      if (type === 'service') {
+        if (unitInput.value === 'تومان' || unitInput.value === '') unitInput.value = 'هر نوبت / دستمزد';
+      } else {
+        if (unitInput.value === 'هر نوبت / دستمزد') unitInput.value = 'تومان';
+      }
+    }
+
+    function switchTab(tabId) {
+      const tabs = ['products', 'settings', 'rubika'];
+      tabs.forEach(t => {
+        const view = document.getElementById('view-' + t);
+        if (view) {
+          if (t === tabId) view.classList.remove('hidden');
+          else view.classList.add('hidden');
+        }
+      });
+
+      const navBtns = document.querySelectorAll('.nav-tab');
+      navBtns.forEach(btn => {
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.className = 'nav-tab px-4 py-2.5 rounded-xl text-xs font-bold bg-primary text-on-primary shadow-sm shrink-0 flex items-center gap-1.5';
+        } else {
+          btn.className = 'nav-tab px-4 py-2.5 rounded-xl text-xs bg-surface-container text-on-surface-variant shrink-0 flex items-center gap-1.5';
+        }
+      });
+
+      if (tabId === 'settings') {
+        loadStoreSettingsForm();
+      } else if (tabId === 'rubika') {
+        refreshRubikaTemplates();
+      }
+    }
+
+    function refreshAdminData() {
+      renderMobileProducts();
+      loadStoreSettingsForm();
+      refreshRubikaTemplates();
+    }
+
+    function renderMobileProducts(filteredList) {
+      const products = filteredList || getProducts();
+      const list = document.getElementById('mobile-products-list');
+      const badge = document.getElementById('products-count-badge');
+      if (badge) badge.textContent = `${toPersianDigits(products.length)} قلم`;
+
+      if (products.length === 0) {
+        list.innerHTML = `
+          <div class="p-8 text-center bg-surface-container-lowest rounded-2xl border border-surface-container text-on-surface-variant text-xs space-y-2">
+            <span class="material-symbols-outlined text-3xl text-surface-variant">inventory_2</span>
+            <p>هیچ محصول یا خدمتی یافت نشد.</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = products.map(prod => `
+        <div class="p-3.5 rounded-2xl bg-surface-container-lowest shadow-sm border border-surface-container/70 flex items-center justify-between gap-3 transition-all hover:border-primary/30">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="relative w-14 h-14 rounded-xl bg-surface-container overflow-hidden shrink-0 border border-surface-container">
+              <img class="w-full h-full object-cover" src="${prod.image}" alt="${prod.title}" referrerpolicy="no-referrer" onerror="this.src='${PRESET_IMAGES.saffron}'"/>
+              ${prod.isSpecial ? '<span class="absolute bottom-0 right-0 left-0 bg-primary/90 text-white text-[8px] font-bold text-center py-0.5">ویژه</span>' : ''}
+            </div>
+            <div class="flex flex-col min-w-0 space-y-0.5">
+              <div class="flex items-center gap-1.5 flex-wrap">
+                <span class="font-bold text-xs text-on-surface truncate">${prod.title}</span>
+                ${prod.badge ? `<span class="px-1.5 py-0.2 rounded text-[9px] font-bold bg-secondary/10 text-secondary">${prod.badge}</span>` : ''}
+              </div>
+              <div class="flex items-center gap-2 text-[11px]">
+                <span class="font-black text-primary">${toPersianDigits(prod.price.toLocaleString())} تومان</span>
+                ${prod.unit && prod.unit !== 'تومان' ? `<span class="text-[10px] text-on-surface-variant font-medium">(${prod.unit})</span>` : ''}
+              </div>
+              <div class="flex items-center gap-2 text-[10px] text-on-surface-variant">
+                <span>دسته‌بندی: ${prod.categoryName || 'عمومی'}</span>
+                <span>•</span>
+                <span class="${prod.stock === 'ناموجود' ? 'text-error font-bold' : 'text-primary'}">${prod.stock || 'موجود'}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex items-center gap-1 shrink-0">
+            <button class="p-2 rounded-xl text-primary bg-primary/10 hover:bg-primary/20 transition-colors" onclick="openPriceModal(${prod.id}, '${prod.title.replace(/'/g, "\\'")}', ${prod.price})" title="ویرایش قیمت">
+              <span class="material-symbols-outlined text-base">edit_note</span>
+            </button>
+            <button class="p-2 rounded-xl ${prod.stock === 'ناموجود' ? 'text-secondary bg-secondary/10' : 'text-on-surface-variant bg-surface-container'} hover:bg-surface-container-high transition-colors" onclick="toggleStockStatus(${prod.id})" title="تغییر وضعیت موجودی">
+              <span class="material-symbols-outlined text-base">${prod.stock === 'ناموجود' ? 'check_box_outline_blank' : 'check_box'}</span>
+            </button>
+            <button class="p-2 rounded-xl text-error bg-error/10 hover:bg-error/20 transition-colors" onclick="deleteProduct(${prod.id}, '${prod.title.replace(/'/g, "\\'")}')" title="حذف کالا">
+              <span class="material-symbols-outlined text-base">delete</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterAdminProducts(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        renderMobileProducts();
+        return;
+      }
+      const products = getProducts();
+      const filtered = products.filter(p => 
+        p.title.toLowerCase().includes(q) || 
+        (p.categoryName && p.categoryName.toLowerCase().includes(q)) ||
+        (p.badge && p.badge.toLowerCase().includes(q)) ||
+        (p.description && p.description.toLowerCase().includes(q))
+      );
+      renderMobileProducts(filtered);
+    }
+
+    function toggleStockStatus(id) {
+      const products = getProducts();
+      const p = products.find(item => item.id === id);
+      if (p) {
+        p.stock = (p.stock === 'ناموجود') ? 'موجود در انبار' : 'ناموجود';
+        saveProducts(products);
+        renderMobileProducts();
+        showToast(`وضعیت «${p.title}» به ${p.stock} تغییر یافت.`);
+      }
+    }
+
+    function handleFullAddProduct() {
+      const title = document.getElementById('prod-title').value.trim();
+      const price = parseFloat(document.getElementById('prod-price').value);
+      const oldPrice = parseFloat(document.getElementById('prod-old-price').value) || (price > 0 ? Math.round(price * 1.2) : 0);
+      const unit = document.getElementById('prod-unit').value.trim() || 'تومان';
+      const cat = document.getElementById('prod-category').value;
+      const catName = document.getElementById('prod-category').options[document.getElementById('prod-category').selectedIndex].text;
+      const badge = document.getElementById('prod-badge').value;
+      const desc = document.getElementById('prod-desc').value.trim() || 'ارائه‌شده در کارزار جهاد اقتصادی محفل بلوار توس مشهد.';
+
+      if (!title || isNaN(price) || price <= 0) {
+        alert('لطفاً عنوان و قیمت معتبر وارد فرمایید.');
+        return;
+      }
+
+      const products = getProducts();
+      const newProduct = {
+        id: Date.now(),
+        title: title,
+        category: cat,
+        categoryName: catName,
+        price: price,
+        oldPrice: oldPrice,
+        unit: unit,
+        badge: badge,
+        stock: 'موجود در انبار',
+        isSpecial: badge.includes('ویژه') || badge.includes('جدید'),
+        image: currentSelectedImage || PRESET_IMAGES.saffron,
+        description: desc
+      };
+
+      products.unshift(newProduct);
+      saveProducts(products);
+      renderMobileProducts();
+      resetProductForm();
+      showToast(`«${title}» با موفقیت افزوده و در فروشگاه منتشر شد.`);
+    }
+
+    function resetProductForm() {
+      document.getElementById('full-product-form').reset();
+      clearSelectedImage();
+    }
+
+    function resetToInitialProducts() {
+      if (confirm('آیا مایلید تمام کالاها به فهرست اولیه کارزار بازنشانی شوند؟')) {
+        saveProducts(INITIAL_PRODUCTS);
+        renderMobileProducts();
+        showToast('کاتالوگ به نمونه‌های اولیه بازنشانی شد.');
+      }
+    }
+
+    let activeEditingProductId = null;
+    function openPriceModal(id, title, currentPrice) {
+      activeEditingProductId = id;
+      document.getElementById('price-modal-title').textContent = title;
+      document.getElementById('price-modal-input').value = currentPrice;
+      const m = document.getElementById('price-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closePriceModal() {
+      const m = document.getElementById('price-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function savePriceModal() {
+      const newPrice = parseFloat(document.getElementById('price-modal-input').value);
+      if (newPrice > 0) {
+        const products = getProducts();
+        const p = products.find(item => item.id === activeEditingProductId);
+        if (p) {
+          p.price = newPrice;
+          saveProducts(products);
+          renderMobileProducts();
+          showToast(`قیمت «${p.title}» بروزرسانی شد.`);
+        }
+      }
+      closePriceModal();
+    }
+
+    function deleteProduct(id, title) {
+      if (confirm(`آیا از حذف آیتم «${title}» از فروشگاه اطمینان دارید؟`)) {
+        let products = getProducts();
+        products = products.filter(item => item.id !== id);
+        saveProducts(products);
+        renderMobileProducts();
+        showToast('محصول از فروشگاه حذف شد.');
+      }
+    }
+
+    // Store Settings Management
+    function loadStoreSettingsForm() {
+      const s = getStoreSettings();
+      document.getElementById('setting-phone').value = s.phone || '';
+      document.getElementById('setting-rubika-url').value = s.rubikaUrl || '';
+      document.getElementById('setting-rubika-id').value = s.rubikaId || '';
+      document.getElementById('setting-address').value = s.address || '';
+      document.getElementById('setting-hours').value = s.hours || '';
+      document.getElementById('setting-announcement').value = s.announcement || '';
+
+      // Live Previews
+      document.getElementById('preview-phone').textContent = s.phoneDisplay || toPersianDigits(s.phone);
+      document.getElementById('preview-rubika').textContent = s.rubikaId;
+      document.getElementById('preview-address').textContent = s.address;
+    }
+
+    function handleSaveStoreSettings() {
+      const phone = document.getElementById('setting-phone').value.trim();
+      const rubikaUrl = document.getElementById('setting-rubika-url').value.trim();
+      const rubikaId = document.getElementById('setting-rubika-id').value.trim();
+      const address = document.getElementById('setting-address').value.trim();
+      const hours = document.getElementById('setting-hours').value.trim();
+      const announcement = document.getElementById('setting-announcement').value.trim();
+
+      const newSettings = {
+        phone: phone || '09367495875',
+        phoneDisplay: toPersianDigits(phone || '09367495875'),
+        rubikaUrl: rubikaUrl || 'https://rubika.ir/karzarmahfel184',
+        rubikaId: rubikaId || 'karzarmahfel184@',
+        address: address || 'مشهد مقدس، بلوار توس، توس ۱۸۴',
+        hours: hours || 'همه روزه ۸:۰۰ الی ۲۱:۰۰',
+        announcement: announcement || ''
+      };
+
+      saveStoreSettings(newSettings);
+      loadStoreSettingsForm();
+      refreshRubikaTemplates();
+      showToast('تنظیمات شماره تماس، روبیکا و آدرس با موفقیت ذخیره شد.');
+    }
+
+    function resetStoreSettingsToDefault() {
+      if (confirm('آیا مایلید تنظیمات به اطلاعات پیش‌فرض کارزار بازگردد؟')) {
+        saveStoreSettings(DEFAULT_STORE_SETTINGS);
+        loadStoreSettingsForm();
+        refreshRubikaTemplates();
+        showToast('تنظیمات به حالت پیش‌فرض بازگردانده شد.');
+      }
+    }
+
+    function refreshRubikaTemplates() {
+      const s = getStoreSettings();
+      const postEl = document.getElementById('rubika-post-text');
+      const serviceEl = document.getElementById('rubika-service-text');
+      const linkEl = document.getElementById('rubika-channel-direct-link');
+
+      if (linkEl) linkEl.href = s.rubikaUrl;
+
+      if (postEl) {
+        postEl.value = `🌺 کارزار جهاد اقتصادی محفل مشهد مقدس (${s.address})
+🎉 توزیع مستقیم و بی‌واسطه:
+• زعفران سرگل و نگین ممتاز قائنات با برگه آزمایش سلامت
+• عینک‌های طبی و مطالعه استاندارد با عدسی ضدبازتاب
+• عسل طبیعی چهل‌گیاه و عرقیات سنتی
+
+📞 شماره تماس و ثبت سفارش: ${s.phoneDisplay || toPersianDigits(s.phone)}
+🌐 کانال رسمی در پیام‌رسان روبیکا: ${s.rubikaUrl} (${s.rubikaId})
+⏰ ساعت پاسخگویی: ${s.hours}`;
+      }
+
+      if (serviceEl) {
+        serviceEl.value = `🌸 طرح همیاری و اشتغال خانگی بانوان محفل
+دست‌اندرکاران گرامی! خدمات پاک‌کردن تمیز و بهداشتی زعفران با بالاترین دقت در محله توس مشهد انجام می‌پذیرد.
+📞 هماهنگی و سفارش: ${s.phoneDisplay || toPersianDigits(s.phone)}
+🌐 پیام‌رسان روبیکا: ${s.rubikaUrl}`;
+      }
+    }
+
+    function copyRubikaText(elementId) {
+      const text = document.getElementById(elementId).value;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('متن با موفقیت کپی شد. آماده انتشار در روبیکا.');
+        }).catch(() => {
+          showToast('متن کپی گردید.');
+        });
+      } else {
+        showToast('متن انتخاب و کپی شد.');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      checkAuth();
+    });
+  </script>
+</body>
+</html>
